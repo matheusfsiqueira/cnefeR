@@ -1,37 +1,10 @@
-library(dplyr)
-library(tidyverse)
-library(openxlsx)
-library(stringr)
-library(sf)
-library(curl)
-library(readr)
+require(dplyr)
 
-rm(list=ls());gc()
-
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-
-process_CNEFE <- function(state = "all"){
+process_CNEFE <- function(path){
   
-  # Dados auxiliares IBGE ---------------------------------------------------
+  paste0(UF_escolhido,"/",UF_escolhido_COD,".txt")
   
-  UF_escolhido_COD <- (estadosBR %>% filter(abbrev_state == UF_escolhido))$code_state
-  
-  # Download Base CNEFE -----------------------------------------------------
-  
-  url <- "ftp.ibge.gov.br"
-  
-  dir_path <- "/Censos/Censo_Demografico_2010/Cadastro_Nacional_de_Enderecos_Fins_Estatisticos/"
-  
-  dir.create(UF_escolhido)
-  
-  downloadCNEFE <- curl_fetch_disk(paste0(url,dir_path,"/",UF_escolhido,"/",UF_escolhido_COD,".zip"),paste0(UF_escolhido,'/dadosCNEFE_',UF_escolhido,".zip"))
-  
-  unzip(downloadCNEFE$content, exdir = UF_escolhido)
-  
-  
-  # Leitura Base CNEFE  ------------------------------
-  
-  bdCNEFE <- readr::read_fwf(paste0(UF_escolhido,"/",UF_escolhido_COD,".txt"), skip=0, guess_max = 1000000,col_positions = fwf_widths(c(2,5,2,2,4,1,20,30,60,8,7,20,10,20,10,20,10,20,10,20,10,20,10,15,15,60,60,2,40,1,30,3,3,8)))
+  bdCNEFE <- readr::read_fwf(file_path, skip=0, guess_max = 1000000,col_positions = fwf_widths(c(2,5,2,2,4,1,20,30,60,8,7,20,10,20,10,20,10,20,10,20,10,20,10,15,15,60,60,2,40,1,30,3,3,8)))
   
   colnames(bdCNEFE) <- c("Código da UF",
                          "Código do município",
