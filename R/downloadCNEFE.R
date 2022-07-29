@@ -1,6 +1,6 @@
-require(curl)
+# require(curl)
 
-download_CNEFE <- function(state="all",dest_path=tempdir(),overwrite=FALSE){
+download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
   
   # get state code(s)
   
