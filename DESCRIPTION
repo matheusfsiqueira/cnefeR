@@ -1,0 +1,13 @@
+Package: cnefeR
+Title: Download CNEFE datasets from Brazilian Census (IBGE)
+Version: 0.0.1
+Authors@R: 
+    person("Matheus", "Siqueira", , "matheusfsiqueira@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-3341-0527"))
+Description: Helper functions to download and process datasets from CNEFE, the Brazilian National Register of Addresses for Statistical Purposes (Cadastro Nacional de Estabelecimentos para Fins Estatísticos), developed by IBGE - Brazilian Institute of Geography and Statistics. Makes it easy and simple to generate a manipulable database with few lines of code.
+License: use_gpl3_license()
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Depends: R(>=4.2.0)
+Imports: curl,readr
