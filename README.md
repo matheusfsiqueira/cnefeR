@@ -4,3 +4,11 @@ Repository created to help access data from CNEFE, the National Register of Addr
 [More Info from the official website](https://www.ibge.gov.br/estatisticas/sociais/trabalho/9662-censo-demografico-2010.html) or [Here](https://censo2010.ibge.gov.br/cnefe/)
 
 Although it is possible to access and download the CNEFE files directly from IBGE's server [(here)](https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Cadastro_Nacional_de_Enderecos_Fins_Estatisticos), the large volume of files makes it impractical to deal with this database. This repository presents auxiliary functions that allow you to easily download the IBGE data and process them in a fast way, generating a manipulable database with few lines of code.
+
+## Installation in R
+``` R
+devtools::install_github("matheusfsiqueira/cnefe_R")
+  library(cnefe_R)
+```
+
+## Usage
