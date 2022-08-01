@@ -137,7 +137,15 @@ process_CNEFE <- function(dir_path,state="all",output_type="df"){
       
     }
     
-    bdCNEFE_tratado_list[[state]] <- bdCNEFE_tratado
+    if(state =="all"){
+    
+      bdCNEFE_tratado_list[[state]] <- bdCNEFE_tratado
+    
+    }else{
+      
+      bdCNEFE_tratado_list <- bdCNEFE_tratado
+      
+    }
     
   }
   

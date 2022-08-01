@@ -1,5 +1,5 @@
 
-getCNEFE <- function(state="all",dest_path="",output_type="df"){
+get_CNEFE <- function(state="all",dest_path="",output_type="df"){
   
   download_CNEFE(state,dest_path,overwrite = TRUE)
   

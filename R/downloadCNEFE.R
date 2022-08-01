@@ -15,9 +15,11 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
     
   }
   
+  downloadCNEFE_files <- c()
+  
   for(state_code in state_codes){
     
-    message(paste0("State: ",states[code_state == state_code,"abbrev_state"]))
+    message(paste0("State: ",statesBR[code_state == state_code,"abbrev_state"]))
     
     # create subdirectory
     
@@ -70,5 +72,8 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
     
     unzip(downloadCNEFE, exdir = paste0(dest_path,'/',state))
     
+    downloadCNEFE_files <- c(downloadCNEFE_files,downloadCNEFE)
+    
   }
+  return(downloadCNEFE_files)
 }
