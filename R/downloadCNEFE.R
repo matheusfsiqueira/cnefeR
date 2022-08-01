@@ -17,7 +17,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
   
   for(state_code in state_codes){
     
-    print(paste0("State: ",states[code_state == state_code,"abbrev_state"]))
+    message(paste0("State: ",states[code_state == state_code,"abbrev_state"]))
     
     # create subdirectory
     
@@ -55,7 +55,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
     
     if(file_status == "not_exists" | overwrite){
       
-      print("Downloading...")
+      message("Downloading... May take a few moments.")
       
       downloadCNEFE <- curl_download(url = download_path,
                                      destfile = file_path,
@@ -66,7 +66,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
       
     }
     
-    print("Unzipping...")
+    message("Unzipping downloaded files...")
     
     unzip(downloadCNEFE, exdir = paste0(dest_path,'/',state))
     
