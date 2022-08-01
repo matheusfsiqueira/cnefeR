@@ -1,3 +1,16 @@
+#' Download CNEFE datasets
+#'
+#' @description
+#' Downloads CNEFE datasets developed from IBGE - Brazilian Institute of Geography and Statistics. Data provided by IBGE consists of a countrywide georeferenced register of addresses, which classifies addresses by type (residential, non-residential, etc.).
+#' @param state state abbreviation of datasets to be downloaded; "all" downloads data from all states
+#' @param dest_path destination directory of downloaded files (defaults to current working directory)
+#' @param overwrite whether to overwrite previosly downloaded files (if present) or not
+#' @return local path of downloaded compressed files from IBGE
+#' @examples 
+#' temp1 <- download_CNEFE(state="all",dest_path="",overwrite=FALSE)
+#' temp2 <- download_CNEFE(state="CE",dest_path="",overwrite=TRUE)
+#' @export
+
 # require(curl)
 
 download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){

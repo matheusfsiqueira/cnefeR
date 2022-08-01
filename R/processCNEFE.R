@@ -1,3 +1,16 @@
+#' Process and treat previously downloaded CNEFE datasets
+#'
+#' @description
+#' Properly reads prevously downloaded text files from CNEFE, tidies data and treats geographical coordinates of addresses. In case of missing data, imputes coordinates from census tract.
+#' @param dir_path directory path of downloaded files (defaults to current working directory).
+#' @param state state abbreviation of datasets to be downloaded; "all" downloads data from all states.
+#' @param output_type "df" outputs data frame object(s). "sf" outputs a simple features object using geographical coordinated from adresses.
+#' @return If you are processing a single brazilian state, function outputs a data frame or sf object; If you are processing "all", output is a list of data frames or a list of sf objects.
+#' @examples 
+#' temp1 <- process_CNEFE(dir_path="",state="all",output_type="df")
+#' temp2 <- process_CNEFE(dir_path="",state="CE",output_type="df")
+#' @export
+
 # require(dplyr)
 # require(readr)
 # require(stringr)
