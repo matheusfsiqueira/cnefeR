@@ -11,7 +11,6 @@
 #' temp2 <- download_CNEFE(state="CE",dest_path="",overwrite=TRUE)
 #' @export
 
-# require(curl)
 
 download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
   
@@ -24,7 +23,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
     
   }else{
     
-    state_codes <- (statesBR %>% filter(abbrev_state == state))$code_state
+    state_codes <- (statesBR %>% dplyr::filter(abbrev_state == state))$code_state
     
   }
   
@@ -32,7 +31,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
   
   for(state_code in state_codes){
     
-    message(paste0("State: ",statesBR[code_state == state_code,"abbrev_state"]))
+    message(paste0("State: ",(statesBR %>% dplyr::filter(code_state == state_code))$abbrev_state))
     
     # create subdirectory
     
@@ -72,7 +71,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
       
       message("Downloading... May take a few moments.")
       
-      downloadCNEFE <- curl_download(url = download_path,
+      downloadCNEFE <- curl::curl_download(url = download_path,
                                      destfile = file_path,
                                      quiet=FALSE)
     }else{
@@ -83,7 +82,7 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
     
     message("Unzipping downloaded files...")
     
-    unzip(downloadCNEFE, exdir = paste0(dest_path,'/',state))
+    utils::unzip(downloadCNEFE, exdir = paste0(dest_path,'/',state))
     
     downloadCNEFE_files <- c(downloadCNEFE_files,downloadCNEFE)
     

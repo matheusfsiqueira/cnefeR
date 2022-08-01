@@ -9,6 +9,7 @@
 #' @examples 
 #' temp1 <- process_CNEFE(dir_path="",state="all",output_type="df")
 #' temp2 <- process_CNEFE(dir_path="",state="CE",output_type="df")
+#' @import dplyr
 #' @export
 
 # require(dplyr)
@@ -81,79 +82,79 @@ process_CNEFE <- function(dir_path,state="all",output_type="df"){
     
     message("Post-treatment...")
     
-    bdCNEFE_tratado <- bdCNEFE %>% mutate(`Código da UF` = as.numeric(`Código da UF`),
-                                          `Código do município` = as.numeric(`Código do município`),
-                                          `Código do distrito` = as.numeric(`Código do distrito`),
-                                          `Código do subdistrito` = as.numeric(`Código do subdistrito`),
-                                          `Código do setor` = as.numeric(`Código do setor`),
-                                          
-                                          `Tipo do logradouro` = stringr::str_trim(`Tipo do logradouro`),
-                                          `Título do logradouro` = stringr::str_trim(`Título do logradouro`),
-                                          `Nome do logradouro` = stringr::str_trim(`Nome do logradouro`),
-                                          `Modificador do número` = stringr::str_trim(`Modificador do número`),
-                                          `Elemento 1` = stringr::str_trim(`Elemento 1`),
-                                          `Elemento 2` = stringr::str_trim(`Elemento 2`),
-                                          `Elemento 3` = stringr::str_trim(`Elemento 3`),
-                                          `Elemento 4` = stringr::str_trim(`Elemento 4`),
-                                          `Elemento 5` = stringr::str_trim(`Elemento 5`),
-                                          `Elemento 6` = stringr::str_trim(`Elemento 6`),
-                                          
-                                          `Valor 1` = stringr::str_trim(`Valor 1`),
-                                          `Valor 2` = stringr::str_trim(`Valor 2`),
-                                          `Valor 3` = stringr::str_trim(`Valor 3`),
-                                          `Valor 4` = stringr::str_trim(`Valor 4`),
-                                          `Valor 5` = stringr::str_trim(`Valor 5`),
-                                          `Valor 6` = stringr::str_trim(`Valor 6`),
-                                          
-                                          Localidade = stringr::str_trim(Localidade),
-                                          
-                                          `Identificação estabelecimento` = stringr::str_trim(`Identificação estabelecimento`),
-                                          
-                                          `identificação domicílio coletivo` = stringr::str_trim(`identificação domicílio coletivo`),
-                                          
-                                          COD_Setor = paste0(`Código da UF`,sprintf("%05d",`Código do município`),sprintf("%02d",`Código do distrito`),sprintf("%02d",`Código do subdistrito`),sprintf("%04d",`Código do setor`)),
-                                          
-                                          Latitude = stringr::str_trim(Latitude),
-                                          Longitude = stringr::str_trim(Longitude)
+    bdCNEFE_tratado <- bdCNEFE %>% dplyr::mutate(`Código da UF` = as.numeric(`Código da UF`),
+                                                 `Código do município` = as.numeric(`Código do município`),
+                                                 `Código do distrito` = as.numeric(`Código do distrito`),
+                                                 `Código do subdistrito` = as.numeric(`Código do subdistrito`),
+                                                 `Código do setor` = as.numeric(`Código do setor`),
+                                                 
+                                                 `Tipo do logradouro` = stringr::str_trim(`Tipo do logradouro`),
+                                                 `Título do logradouro` = stringr::str_trim(`Título do logradouro`),
+                                                 `Nome do logradouro` = stringr::str_trim(`Nome do logradouro`),
+                                                 `Modificador do número` = stringr::str_trim(`Modificador do número`),
+                                                 `Elemento 1` = stringr::str_trim(`Elemento 1`),
+                                                 `Elemento 2` = stringr::str_trim(`Elemento 2`),
+                                                 `Elemento 3` = stringr::str_trim(`Elemento 3`),
+                                                 `Elemento 4` = stringr::str_trim(`Elemento 4`),
+                                                 `Elemento 5` = stringr::str_trim(`Elemento 5`),
+                                                 `Elemento 6` = stringr::str_trim(`Elemento 6`),
+                                                 
+                                                 `Valor 1` = stringr::str_trim(`Valor 1`),
+                                                 `Valor 2` = stringr::str_trim(`Valor 2`),
+                                                 `Valor 3` = stringr::str_trim(`Valor 3`),
+                                                 `Valor 4` = stringr::str_trim(`Valor 4`),
+                                                 `Valor 5` = stringr::str_trim(`Valor 5`),
+                                                 `Valor 6` = stringr::str_trim(`Valor 6`),
+                                                 
+                                                 Localidade = stringr::str_trim(Localidade),
+                                                 
+                                                 `Identificação estabelecimento` = stringr::str_trim(`Identificação estabelecimento`),
+                                                 
+                                                 `identificação domicílio coletivo` = stringr::str_trim(`identificação domicílio coletivo`),
+                                                 
+                                                 COD_Setor = paste0(`Código da UF`,sprintf("%05d",`Código do município`),sprintf("%02d",`Código do distrito`),sprintf("%02d",`Código do subdistrito`),sprintf("%04d",`Código do setor`)),
+                                                 
+                                                 Latitude = stringr::str_trim(Latitude),
+                                                 Longitude = stringr::str_trim(Longitude)
     )
     
     # Treating geographic coordinates
     
-    bdCNEFE_tratado <- bdCNEFE_tratado %>% mutate(tipo_Latitude = ifelse(grepl(" S$",Latitude),"Sul",ifelse(grepl(" N$",Latitude),"Norte","N/A")),
-                                                  
-                                                  Latitude = ifelse(!is.na(Latitude),str_remove(str_remove(Latitude, " S")," N"),NA),
-                                                  Longitude = ifelse(!is.na(Longitude),str_remove(str_remove(Longitude, " O")," L"),NA),
-                                                  
-                                                  Latitude_treated = ifelse(is.na(Latitude),NA, as.numeric(str_split_fixed(Latitude," ",3)[,1]) + as.numeric(str_split_fixed(Latitude," ",3)[,2])/60 + as.numeric(str_split_fixed(Latitude," ",3)[,3])/3600 ),
-                                                  Longitude_treated = ifelse(is.na(Longitude),NA, as.numeric(str_split_fixed(Longitude," ",3)[,1]) + as.numeric(str_split_fixed(Longitude," ",3)[,2])/60 + as.numeric(str_split_fixed(Longitude," ",3)[,3])/3600),
-                                                  
-                                                  Latitude_treated = Latitude_treated * ifelse(tipo_Latitude == "Sul",-1,1), # south, negative
-                                                  Longitude_treated = Longitude_treated * -1, # west, negative
+    bdCNEFE_tratado <- bdCNEFE_tratado %>% dplyr::mutate(tipo_Latitude = ifelse(grepl(" S$",Latitude),"Sul",ifelse(grepl(" N$",Latitude),"Norte","N/A")),
+                                                         
+                                                         Latitude = ifelse(!is.na(Latitude),stringr::str_remove(stringr::str_remove(Latitude, " S")," N"),NA),
+                                                         Longitude = ifelse(!is.na(Longitude),stringr::str_remove(stringr::str_remove(Longitude, " O")," L"),NA),
+                                                         
+                                                         Latitude_treated = ifelse(is.na(Latitude),NA, as.numeric(stringr::str_split_fixed(Latitude," ",3)[,1]) + as.numeric(stringr::str_split_fixed(Latitude," ",3)[,2])/60 + as.numeric(stringr::str_split_fixed(Latitude," ",3)[,3])/3600 ),
+                                                         Longitude_treated = ifelse(is.na(Longitude),NA, as.numeric(stringr::str_split_fixed(Longitude," ",3)[,1]) + as.numeric(stringr::str_split_fixed(Longitude," ",3)[,2])/60 + as.numeric(stringr::str_split_fixed(Longitude," ",3)[,3])/3600),
+                                                         
+                                                         Latitude_treated = Latitude_treated * ifelse(tipo_Latitude == "Sul",-1,1), # south, negative
+                                                         Longitude_treated = Longitude_treated * -1, # west, negative
     )
     
     # Use lat/long from census tract when coordinates not present
     
-    bdCNEFE_tratado <- bdCNEFE_tratado %>% left_join(censusTractsBR, by = c("COD_Setor"="code_tract"))
+    bdCNEFE_tratado <- bdCNEFE_tratado %>% dplyr::left_join(censusTractsBR, by = c("COD_Setor"="code_tract"))
     
-    bdCNEFE_tratado <- bdCNEFE_tratado %>% mutate(Longitude_treated = ifelse(!is.na(Longitude_treated), Longitude_treated,X),
-                                                  Latitude_treated = ifelse(!is.na(Latitude_treated), Latitude_treated,Y),
-                                                  Coords_Source = ifelse(is.na(Latitude) & !is.na(Latitude_treated),"Imputed from Census Tract","Originally Collected")
+    bdCNEFE_tratado <- bdCNEFE_tratado %>% dplyr::mutate(Longitude_treated = ifelse(!is.na(Longitude_treated), Longitude_treated,X),
+                                                         Latitude_treated = ifelse(!is.na(Latitude_treated), Latitude_treated,Y),
+                                                         Coords_Source = ifelse(is.na(Latitude) & !is.na(Latitude_treated),"Imputed from Census Tract","Originally Collected")
     )
     
     # Output
     
-    bdCNEFE_tratado <- bdCNEFE_tratado %>% select(-one_of("X","Y","tipo_Latitude"))
+    bdCNEFE_tratado <- bdCNEFE_tratado %>% dplyr::select(-dplyr::one_of("X","Y","tipo_Latitude"))
     
     if(output_type=="sf"){
       
-      bdCNEFE_tratado <- bdCNEFE_tratado %>% filter(!is.na(Latitude_treated) & !is.na(Longitude_treated)) %>% st_as_sf(coords=c("Longitude_treated","Latitude_treated"), crs=4326)
+      bdCNEFE_tratado <- bdCNEFE_tratado %>% dplyr::filter(!is.na(Latitude_treated) & !is.na(Longitude_treated)) %>% sf::st_as_sf(coords=c("Longitude_treated","Latitude_treated"), crs=4326)
       
     }
     
     if(state =="all"){
-    
+      
       bdCNEFE_tratado_list[[state]] <- bdCNEFE_tratado
-    
+      
     }else{
       
       bdCNEFE_tratado_list <- bdCNEFE_tratado
