@@ -18,8 +18,6 @@
 
 process_CNEFE <- function(dir_path,state="all",output_type="df"){
   
-  statesBR <- data(statesBR)
-  
   files <- list.files(path = dir_path, pattern = ".txt", full.names = TRUE, recursive = TRUE)
   
   if(state != "all"){

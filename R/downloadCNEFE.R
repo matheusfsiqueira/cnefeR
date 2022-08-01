@@ -15,8 +15,6 @@
 
 download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
   
-  statesBR <- data(statesBR)
-  
   # get state code(s)
   
   if(state=="all"){
