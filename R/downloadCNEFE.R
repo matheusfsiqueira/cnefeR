@@ -6,12 +6,12 @@ download_CNEFE <- function(state="all",dest_path="",overwrite=FALSE){
   
   if(state=="all"){
     
-    state_codes <- states$code_state
+    state_codes <- statesBR$code_state
     
     
   }else{
     
-    state_codes <- (states %>% filter(abbrev_state == state))$code_state
+    state_codes <- (statesBR %>% filter(abbrev_state == state))$code_state
     
   }
   
